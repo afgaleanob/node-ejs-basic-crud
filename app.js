@@ -16,6 +16,13 @@ app.set('views', 'views' );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//db
+const sequelize = require('./models/dbConnect');
+//models
+require('./models/userModel');
+
+sequelize.sync({ force: false, alter: false });
+
 // routes
 app.use('/', mainRouter);
 
