@@ -1,0 +1,80 @@
+<%- include('./template/head', {pageTitle: 'Registrate',pageDescription: 'página en la que se crea la cuenta el usuario' }) %>
+<%- include('./template/message') %>
+    <main class="form-signin  m-auto text-center">
+        <form action="/sign-up" method="post">
+            <div class="container mt-5 mb-5">
+                <h1 class="h3 mb-3 fw-normal">Registrate</h1>
+                <div class="form-floating">
+                    <input type="text" name="name" class="form-control">
+                    <label for="floatingInput">Nombre</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="user" class="form-control" id="floatingInput">
+                    <label for="floatingInput">Usuario</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" name="mail" class="form-control" id="floatingInput">
+                    <label for="floatingInput">Correo</label>
+                </div>
+                <div class="row  mb-3">
+                    <div class="form-floating col-5">
+                        <input id="pwdInput" type="password" name="pwd" class="form-control">
+                        <label for="pwdInput" style="margin-left: 1rem;">
+                            Contraseña                
+                        </label>
+                    </div>
+                    <div class="col-2"> 
+                        <span>
+                            <i class="bi bi-eye password-toggle" id="togglePassword"></i>
+                        </span>
+                    </div>
+                    <div id="pwd2Div" class="form-floating col-5">
+                        <input id="pwd2Input" type="password" name="pwd2" class="form-control" >
+                        <label for="pwd2Input" style="margin-left: 1rem;">Repite la contraseña</label>
+                    </div>
+                </div>
+                <button class="btn btn-primary w-100 py-2" type="submit">
+                    Iniciar Sesión 
+                    <i class="bi bi-save"></i>
+                </button>
+            </div>
+            <input id="pwd2Checkbox" type="checkbox" checked name="pwdConfirmation" hidden>
+        </form>
+        <div>
+            <p>¿Yo tienes una cuenta?</p>
+            <a href="/sign-in">Iniciar Sesión</a>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('pwdInput');
+            const password2Input = document.getElementById('pwd2Input');
+            const password2div = document.getElementById('pwd2Div');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordConfirmation = document.getElementById('pwd2Checkbox')
+
+            togglePassword.addEventListener('click', function(e) {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePassword.classList.remove('bi-eye');
+                    togglePassword.classList.add('bi-eye-slash');
+                    password2Input.disabled = true;
+                    password2div.hidden = true;
+                    passwordConfirmation.checked = false;
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.classList.remove('bi-eye-slash');
+                    togglePassword.classList.add('bi-eye');
+                    password2Input.disabled = false;
+                    password2div.hidden = false;
+                    passwordConfirmation.checked = true;
+                }
+            });
+        });
+    </script>
+
+<%- include('./template/footer') %>

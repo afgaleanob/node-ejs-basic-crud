@@ -1,5 +1,5 @@
-<%- include('./template/head') %>
-
+<%- include('./template/head', {pageTitle: 'Iniciar sesion', pageDescription: ''}) %>
+<%- include('./template/message') %>
 <style>
   .form-signin {
     max-width: 330px;
@@ -20,7 +20,7 @@
         <div >
             <img src="image/logo.png">
         </div>
-        <form action="/login" method="post">
+        <form action="/sign-in" method="post">
             <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
         
             <div class="form-floating">
