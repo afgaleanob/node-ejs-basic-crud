@@ -8,10 +8,12 @@ User.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
     },
     user: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
     pwd: {
         type: DataTypes.STRING,
@@ -20,15 +22,17 @@ User.init({
     name: {
         type: DataTypes.STRING,
         allowNull: false,
-
     },
-    email: {
+    mail: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: null
+        defaultValue: null,
+        unique: true,
     },
 }, {
     timestamps: false, 
     sequelize, 
     modelName: 'User',
 });
+
+module.exports = User;
