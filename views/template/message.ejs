@@ -1,0 +1,6 @@
+<% if(message != '') { %>
+    <div class="alert alert-<%= message.type %> alert-dismissible fixed-top" role="alert">
+        <%= message.message %>
+        <button type="button" class="btn-close closePopNotification" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<%}%>
