@@ -41,7 +41,7 @@ async function isLoggedIn(req, res, next) {
         });
 
         if (!sessionData) {
-        return res.redirect('sign-in');
+            return res.redirect('sign-in');
         }
         req.userId = sessionData.userId;
         next();
@@ -51,8 +51,30 @@ async function isLoggedIn(req, res, next) {
     }
     
 }
+async function isNotLoggedIn(req, res, next) {
+    try{
+        const token = req.cookies[COOKIE_NAME]; 
+        if (!token) {
+            return next()
+        }
+
+        const sessionData = await Session.findOne({
+            where: { token },
+        });
+
+        if (!sessionData) {
+            return next();
+        }
+        return res.redirect('/')
+    
+    } catch(e) {
+        console.log(e)
+        return res.redirect('/')
+    }
+}
 
 module.exports = {
     createTokenAndCookie,
     isLoggedIn,
+    isNotLoggedIn,
 }
