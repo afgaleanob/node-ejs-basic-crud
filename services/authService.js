@@ -44,6 +44,38 @@ async function createNewUser({ name, user, mail, pwd, pwd2, pwdConfirmation }) {
     }
 }
 
+async function verifiUserAndPwd({ user, pwd }) {
+    try {
+        // user can be mail or user
+        const foundUser = await User.findOne({
+            where: {
+                [Op.or]: [
+                    { user: user },
+                    { mail: user }
+                ]
+            }
+        });
+
+        if (!foundUser) {
+            return { success: false, message: 'Usuario y/o contraseña incorresto(s)' };
+        }
+
+        // compare crypted password with request pwd
+        const passwordMatch = await bcrypt.compare(pwd, foundUser.pwd);
+
+        if (!passwordMatch) {
+            return { success: false, message: 'Usuario y/o contraseña incorresto(s)' };
+        }
+
+        return { success: true, message: 'Inicio de sesión exitoso', user: foundUser };
+    } catch (error) {
+        console.error(error);
+        throw new Error('Operación rechazada por el servidor, intenta de nuevo más tarde');
+    }
+}
+
+
 module.exports = {
-    createNewUser
+    createNewUser,
+    verifiUserAndPwd
 };

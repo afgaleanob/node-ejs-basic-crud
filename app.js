@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views' );
 
+app.use(cookieParser());
 //to get request params
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -20,6 +22,7 @@ app.use(bodyParser.json());
 const sequelize = require('./models/dbConnect');
 //models
 require('./models/userModel');
+require('./models/sessionModel')
 
 sequelize.sync({ force: false, alter: false });
 

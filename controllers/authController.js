@@ -1,4 +1,17 @@
-const { createNewUser } = require('../services/authService');
+const sessionManager = require('../sessionManager')
+const { createNewUser, verifiUserAndPwd } = require('../services/authService');
+
+async function signInUser(req, res){
+    try{
+        const signInRequest = await verifiUserAndPwd(req.body);
+        if(!signInRequest.success){
+            return handleMessage(res, signInRequest.message, 'danger', 'signIn');
+        }
+        sessionManager.createTokenAndCookie(signInRequest.user, res)
+    }catch(e){
+        console.log(e)
+    }
+}
 
 async function signUpUser(req, res) {
     try {
@@ -20,4 +33,7 @@ function handleMessage(res, message, messageType, page) {
     res.render(page);
 }
 
-module.exports = { signUpUser };
+module.exports = { 
+    signUpUser,
+    signInUser
+};
