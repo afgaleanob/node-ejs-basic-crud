@@ -1,5 +1,9 @@
+require('dotenv').config();
+
 const sessionManager = require('../sessionManager')
+
 const { createNewUser, verifiUserAndPwd } = require('../services/authService');
+const Session = require('../models/sessionModel');
 
 async function signInUser(req, res){
     try{
@@ -32,8 +36,27 @@ function handleMessage(res, message, messageType, page) {
     };
     res.render(page);
 }
+async function signOutUser(req, res) {
+    try {
+        const COOKIE_NAME = process.env.COOKIE_NAME;
+        const token = req.cookies[COOKIE_NAME];
+        if (token) {
+            await Session.destroy({
+                where: { token },
+            });
+        }
+
+        res.clearCookie(COOKIE_NAME);
+
+        return res.redirect('/sign-in');
+    } catch (error) {
+        console.error(error);
+        return res.redirect('/');
+    }
+}
 
 module.exports = { 
     signUpUser,
-    signInUser
+    signInUser,
+    signOutUser,
 };
