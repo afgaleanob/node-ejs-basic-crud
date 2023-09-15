@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const { signUpUser, signInUser } = require('../controllers/authController');
-const{ verifySessionCookie } = require('../sessionManager');
+const{ isLoggedIn } = require('../sessionManager');
 
 function validateMessage(req, res, next) {
     res.locals.message = res.locals.message || '';
     next();
 }
-router.get('/', verifySessionCookie, (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
     res.send('done')
 })
 router.get('/sign-in', validateMessage, (req,res) => {

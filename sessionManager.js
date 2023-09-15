@@ -30,7 +30,7 @@ async function createTokenAndCookie(user, res) {
     }
 }
 
-async function verifySessionCookie(req, res, next) {
+async function isLoggedIn(req, res, next) {
     try {
         const token = req.cookies[COOKIE_NAME]; 
         if (!token) {
@@ -54,5 +54,5 @@ async function verifySessionCookie(req, res, next) {
 
 module.exports = {
     createTokenAndCookie,
-    verifySessionCookie,
+    isLoggedIn,
 }
