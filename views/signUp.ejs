@@ -1,5 +1,6 @@
 <%- include('./template/head', {pageTitle: 'Registrate',pageDescription: 'página en la que se crea la cuenta el usuario' }) %>
 <%- include('./template/message') %>
+    <div id="messageDiv"></div>
     <main class="form-signin  m-auto text-center">
         <form action="/sign-up" method="post">
             <div class="container mt-5 mb-5">
@@ -47,34 +48,5 @@
         </div>
 
     </main>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('pwdInput');
-            const password2Input = document.getElementById('pwd2Input');
-            const password2div = document.getElementById('pwd2Div');
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordConfirmation = document.getElementById('pwd2Checkbox')
-
-            togglePassword.addEventListener('click', function(e) {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    togglePassword.classList.remove('bi-eye');
-                    togglePassword.classList.add('bi-eye-slash');
-                    password2Input.disabled = true;
-                    password2div.hidden = true;
-                    passwordConfirmation.checked = false;
-                } else {
-                    passwordInput.type = 'password';
-                    togglePassword.classList.remove('bi-eye-slash');
-                    togglePassword.classList.add('bi-eye');
-                    password2Input.disabled = false;
-                    password2div.hidden = false;
-                    passwordConfirmation.checked = true;
-                }
-            });
-        });
-    </script>
-
+    <script src="js/signupPage.js"></script>
 <%- include('./template/footer') %>
