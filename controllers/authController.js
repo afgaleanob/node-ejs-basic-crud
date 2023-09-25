@@ -11,7 +11,7 @@ async function signInUser(req, res){
         if(!signInRequest.success){
             return handleMessage(res, signInRequest.message, 'danger', 'signIn');
         }
-        sessionManager.createTokenAndCookie(signInRequest.user, res)
+        sessionManager.createTokenAndCookie(signInRequest.user, res, req)
     }catch(e){
         console.log(e)
     }

@@ -7,13 +7,13 @@ const Session = require('./models/sessionModel');
 const SECRET_KEY =process.env.SECRET_KEY;
 const COOKIE_NAME = process.env.COOKIE_NAME;
 
-async function createTokenAndCookie(user, res) {
+async function createTokenAndCookie(user, res, req) {
     const userAgentString = req.headers['user-agent'];
     const userAgent = useragent.parse(userAgentString);
     const expireTime = 30 * 24 * 60 * 60;
     const token = jwt.sign({ userId: user.id }, SECRET_KEY);
     const expires = new Date(Date.now() + expireTime * 1000);
-
+    const date = new Date();
     client = {os: userAgent.os.toString(), browser: userAgent.family, date: date};
     clientName = 'desde ' + client.browser + ' en ' + client.os + ' el ' + client.date.toLocaleDateString();
     try{
