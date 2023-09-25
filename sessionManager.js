@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const useragent = require('useragent');
 require('dotenv').config();
 
 const Session = require('./models/sessionModel');
@@ -7,15 +8,20 @@ const SECRET_KEY =process.env.SECRET_KEY;
 const COOKIE_NAME = process.env.COOKIE_NAME;
 
 async function createTokenAndCookie(user, res) {
+    const userAgentString = req.headers['user-agent'];
+    const userAgent = useragent.parse(userAgentString);
     const expireTime = 30 * 24 * 60 * 60;
     const token = jwt.sign({ userId: user.id }, SECRET_KEY);
     const expires = new Date(Date.now() + expireTime * 1000);
+
+    client = {os: userAgent.os.toString(), browser: userAgent.family, date: date};
+    clientName = 'desde ' + client.browser + ' en ' + client.os + ' el ' + client.date.toLocaleDateString();
     try{
         await Session.create({
           userId: user.id,
           token,
           expires,
-          name: '',
+          name: clientName,
         });
         res.cookie(COOKIE_NAME, token, { 
             expires,
