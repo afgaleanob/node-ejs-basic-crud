@@ -4,7 +4,6 @@ const { Sequelize } = require('sequelize');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const port = process.env.PORT || 3000;
 const mainRouter = require('./routes/index');
 
 const app = express();
@@ -33,12 +32,10 @@ app.use('/', mainRouter);
 //public
 app.use( express.static( process.env.PUBLICDIR ));
 
-app.listen(port, () => {
-    console.log(`Servidor en ejecución en el puerto ${port}.`);
-});
-
 //global errors
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Error interno del servidor');
 });
+
+module.exports = app
