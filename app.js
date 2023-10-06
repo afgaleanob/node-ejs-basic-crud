@@ -11,7 +11,7 @@ const app = express();
 
 //views
 app.set('view engine', 'ejs');
-app.set('views', 'views' );
+app.set('views', 'views');
 
 app.use(cookieParser());
 //to get request params
@@ -22,7 +22,8 @@ app.use(bodyParser.json());
 const sequelize = require('./models/dbConnect');
 //models
 require('./models/userModel');
-require('./models/sessionModel')
+require('./models/sessionModel');
+require('./models/clientModel');
 
 sequelize.sync({ force: false, alter: false });
 
