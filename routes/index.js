@@ -8,9 +8,11 @@ function validateMessage(req, res, next) {
     res.locals.message = res.locals.message || '';
     next();
 }
-router.get('/', isLoggedIn, (req, res) => {
-    res.send('done')
-})
+
+router.get('/', isLoggedIn, validateMessage, (req, res) => {
+    res.render('home');
+});
+
 router.get('/sign-in', isNotLoggedIn, validateMessage, (req,res) => {
     res.render('signIn');
 });
